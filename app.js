@@ -1,20 +1,25 @@
-const fs = require("fs");
+const http = require("http");
 
-fs.readFile("./test.txt", "utf8", (error, data) => {
-  fs.mkdirSync("./files", () => {});
-  fs.writeFileSync("./files/test2.txt", `${data} New text!`, (error) => {
-    error ? console.log(error) : null;
-  });
+const PORT = 3000;
+
+const server = http.createServer((req, res) => {
+  console.log("Server request");
+  console.log(req.url, req.method);
+
+  // res.setHeader("Content-Type", "text/html");
+  // res.write('<head><link rel="stylesheet" href="#"</head>');
+  // res.write("<h1>Hello world!</h1>");
+  // res.write("<p>My name is Vincent</p>");
+
+  res.setHeader("Content-Type", "application/json");
+
+  const data = JSON.stringify([
+    { name: "Tommy", age: 35 },
+    { name: "Arthur", age: 40 },
+  ]);
+  res.end(data);
 });
 
-setTimeout(() => {
-  if (fs.existsSync("./files/test2.txt")) {
-    fs.unlink("./files/test2.txt", () => {});
-  }
-}, 4000);
-
-setTimeout(() => {
-  if (fs.existsSync("./files/test2.txt")) {
-    fs.rmdir("./files", () => {});
-  }
-}, 6000);
+server.listen(PORT, "localhost", (error) => {
+  error ? console.log(error) : console.log(`Listening port ${PORT}`);
+});

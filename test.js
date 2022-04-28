@@ -1,5 +1,10 @@
-// const userName = "Vincent";
+const userName = "Vincent";
 
-// const sayHi = (userName) => `Hello, my name is ${userName}`;
+const sayHi = (userName) => `Hello, my name is ${userName}`;
 
-// console.log(sayHi(userName));
+console.log(sayHi(userName));
+
+module.exports = {
+  userName,
+  sayHi,
+};
